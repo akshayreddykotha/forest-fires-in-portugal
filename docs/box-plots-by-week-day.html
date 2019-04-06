@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>1 2. Box Plots by week day | Forest Fires Data Analysis</title>
+  <meta name="description" content="1 2. Box Plots by week day | Forest Fires Data Analysis">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="1 2. Box Plots by week day | Forest Fires Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="akshayreddykotha/forest-fires-in-portugal" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 2. Box Plots by week day | Forest Fires Data Analysis" />
+  
+  
+  
+
+<meta name="author" content="Akshay Kotha">
+
+
+<meta name="date" content="2019-04-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Forest Fires in Portugal</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Repo link</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#analyzing-forest-fires-data-by-visualizations-using-r"><i class="fa fa-check"></i># Analyzing forest fires data by visualizations using R</a></li>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#load-packages"><i class="fa fa-check"></i><b>0.1</b> Load packages</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#import-dataset"><i class="fa fa-check"></i><b>0.2</b> Import dataset</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#questions"><i class="fa fa-check"></i><b>0.3</b> Questions:</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#number-of-forest-fires-by-month"><i class="fa fa-check"></i><b>0.4</b> 1. Number of forest fires by month</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#number-of-forest-fires-by-a-week-day"><i class="fa fa-check"></i><b>0.5</b> 2. Number of forest fires by a week-day</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#re-ordering-months-for-easier-readability"><i class="fa fa-check"></i><b>0.6</b> Re-ordering months for easier readability</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#plots-after-using-factor"><i class="fa fa-check"></i><b>0.7</b> Plots after using factor</a><ul>
+<li class="chapter" data-level="0.7.1" data-path="index.html"><a href="index.html#number-of-forest-fires-by-month-1"><i class="fa fa-check"></i><b>0.7.1</b> Number of forest fires by month:</a></li>
+<li class="chapter" data-level="0.7.2" data-path="index.html"><a href="index.html#number-of-forest-fires-in-different-weekdays"><i class="fa fa-check"></i><b>0.7.2</b> Number of forest fires in different weekdays:</a></li>
+</ul></li>
+<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#what-are-the-causes"><i class="fa fa-check"></i><b>0.8</b> What are the causes?</a></li>
+<li class="chapter" data-level="0.9" data-path="index.html"><a href="index.html#box-plots-by-month"><i class="fa fa-check"></i><b>0.9</b> 1. Box plots by month</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="box-plots-by-week-day.html"><a href="box-plots-by-week-day.html"><i class="fa fa-check"></i><b>1</b> 2. Box Plots by week day</a><ul>
+<li class="chapter" data-level="1.1" data-path="box-plots-by-week-day.html"><a href="box-plots-by-week-day.html#which-variables-are-related-to-forest-fire-severity"><i class="fa fa-check"></i><b>1.1</b> Which variables are related to forest fire severity?</a></li>
+<li class="chapter" data-level="1.2" data-path="box-plots-by-week-day.html"><a href="box-plots-by-week-day.html#plotting-area-burnt-between-0-ha-and-50-ha"><i class="fa fa-check"></i><b>1.2</b> Plotting area burnt between 0 ha and 50 ha</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Forest Fires Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="box-plots-by-week-day" class="section level1">
+<h1><span class="header-section-number">1</span> 2. Box Plots by week day</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">create_box_by_day &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
+  <span class="kw">ggplot</span>(ff) <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes_string</span>(x, y) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>()
+}
+
+X_var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;day&quot;</span>)
+Y_var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FFMC&quot;</span>, <span class="st">&quot;DMC&quot;</span>,<span class="st">&quot;DC&quot;</span>, <span class="st">&quot;ISI&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;wind&quot;</span>, <span class="st">&quot;rain&quot;</span>)
+  
+<span class="kw">map2</span>(X_var, Y_var, create_box_by_day)</code></pre></div>
+<pre><code>## [[1]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-1.png" width="672" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-2.png" width="672" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-3.png" width="672" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-4.png" width="672" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-5.png" width="672" /></p>
+<pre><code>## 
+## [[6]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-6.png" width="672" /></p>
+<pre><code>## 
+## [[7]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-7.png" width="672" /></p>
+<pre><code>## 
+## [[8]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/function-for-multiple-plots-by-day-8.png" width="672" /></p>
+<p><strong>Comment:</strong> It’s clear from looking at the solid black lines in the centers of the box plots that medians for each variable seem to be quite consistent across days of the week. The size of the boxes are also consistent across days, suggesting that the ranges of data values are similar.</p>
+<p>The number of outlier points and the length of the box whiskers representing high and low points vary from day to day. However, there do not seem to be any patterns that suggest that the variables differ by day of the week, despite the fact that the number of forest fires appears to be higher on weekends.</p>
+<p><em>Though week day plots didn’t reveal anything interesting month-wise box plots got some information which looks quite relevant and the variables which revealed such differences might be capable of explaining why there are such differences in a further investigation.</em></p>
+<div id="which-variables-are-related-to-forest-fire-severity" class="section level2">
+<h2><span class="header-section-number">1.1</span> Which variables are related to forest fire severity?</h2>
+<div id="how-is-forest-fire-severity-measured" class="section level4">
+<h4><span class="header-section-number">1.1.0.1</span> How is forest fire severity measured?</h4>
+<p>In our dataset, <code>area</code> is the variable which helps us measure the fire severity.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">create_scatter &lt;-<span class="st"> </span><span class="cf">function</span>(x,y){
+  <span class="kw">ggplot</span>(<span class="dt">data =</span> ff) <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes_string</span>(x,y) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()
+}
+
+Y_scat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>)
+X_scat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FFMC&quot;</span>, <span class="st">&quot;DMC&quot;</span>,<span class="st">&quot;DC&quot;</span>, <span class="st">&quot;ISI&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;wind&quot;</span>, <span class="st">&quot;rain&quot;</span>)
+
+<span class="kw">map2</span>(X_scat, Y_scat, create_scatter)</code></pre></div>
+<pre><code>## [[1]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-1.png" width="672" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-2.png" width="672" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-3.png" width="672" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-4.png" width="672" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-5.png" width="672" /></p>
+<pre><code>## 
+## [[6]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-6.png" width="672" /></p>
+<pre><code>## 
+## [[7]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-7.png" width="672" /></p>
+<pre><code>## 
+## [[8]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/scatter-plot-function-8.png" width="672" /></p>
+<p>It seems most of the data points are in the lower part of any plots.</p>
+<p><strong>Let’s plot a histogram quickly:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ff)<span class="op">+</span>
+<span class="st">  </span><span class="kw">aes</span>(area) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)</code></pre></div>
+<p><img src="forest-fires-in-portugal_files/figure-html/quick-check-where-the-points-are-concentrated-1.png" width="672" /></p>
+<p>The above histogram tells that the burnt area concentration is below 500 ha per each entry in the dataset. It is also evident that most number of points are focused towards a lower area which is less than <code>50 ha</code>. As most of the area points are in the lower part of the plots, let’s filter out data and plot the same scatter plots for a fewer number of data points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">area_is_zero &lt;-<span class="st"> </span>ff <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(area <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
+area_without_outliers &lt;-<span class="st"> </span>ff <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(area <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>area <span class="op">&lt;</span><span class="st"> </span><span class="dv">400</span>)
+area_0_and_<span class="dv">50</span> &lt;-<span class="st"> </span>ff <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(area <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>area <span class="op">&lt;=</span><span class="st"> </span><span class="dv">50</span>)</code></pre></div>
+</div>
+</div>
+<div id="plotting-area-burnt-between-0-ha-and-50-ha" class="section level2">
+<h2><span class="header-section-number">1.2</span> Plotting area burnt between 0 ha and 50 ha</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">create_scatter &lt;-<span class="st"> </span><span class="cf">function</span>(x,y){
+  <span class="kw">ggplot</span>(<span class="dt">data =</span> area_0_and_<span class="dv">50</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes_string</span>(x,y) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()
+}
+
+Y_scat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>)
+X_scat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FFMC&quot;</span>, <span class="st">&quot;DMC&quot;</span>,<span class="st">&quot;DC&quot;</span>, <span class="st">&quot;ISI&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;RH&quot;</span>, <span class="st">&quot;wind&quot;</span>, <span class="st">&quot;rain&quot;</span>)
+
+<span class="kw">map2</span>(X_scat, Y_scat, create_scatter)</code></pre></div>
+<pre><code>## [[1]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-1.png" width="672" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-2.png" width="672" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-3.png" width="672" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-4.png" width="672" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-5.png" width="672" /></p>
+<pre><code>## 
+## [[6]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-6.png" width="672" /></p>
+<pre><code>## 
+## [[7]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-7.png" width="672" /></p>
+<pre><code>## 
+## [[8]]</code></pre>
+<p><img src="forest-fires-in-portugal_files/figure-html/re-plotting-scatter-plot-8.png" width="672" /> <strong>Comment:</strong> With no clear patterns after plotting without outliers and removing zero area values separately, plotting for the area in the range [0,50] shows <code>FFMC</code> has a positive trend with <code>area</code>. The plot of rain and area shows that there was no rain when any amount of area occurred, which is a trivial insight. No other variables show any noticeable relation with area.</p>
+<p>This ends the data exploration and suggests to verify the insights derived from a statistical standpoint so that the happenings can be explained with reason.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-forest-fires-in-portugal.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["forest-fires-in-portugal.pdf", "forest-fires-in-portugal.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

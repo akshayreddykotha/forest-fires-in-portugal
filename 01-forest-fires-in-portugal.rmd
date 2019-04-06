@@ -1,0 +1,229 @@
+# Analyzing forest fires data by visualizations in R {-}
+
+---
+title: "Forest fires"
+output: statsr:::statswithr_lab
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE)
+# Doesn't show any code chunks when echo=FALSE
+```
+
+This is a short preliminary data analysis document exploring the relation between forest fires occurred and various temporal and environmental variables based on which one can get an idea to further investigate the causes of forest fires in portugal.
+
+Get the data [here](https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/).
+
+## Load packages
+```{r load-pacakges}
+library("readr")
+library("dplyr")
+library("ggplot2")
+library("purrr")
+```
+
+## Import dataset
+
+```{r import-csv, echo = TRUE}
+ff <- read_csv("forestfires.csv")
+head(ff)
+```
+
+## Questions to answer:
+1. During which months are forest fires most common?
+2. On which days of the week are forest fires most common?
+3. What are the causes of forest fires?
+
+### Number of forest fires by month
+```{r fires-by-month, echo = TRUE}
+fireinmonths <- ff %>%
+  group_by(month) %>%
+  summarize(count = n())
+```
+
+```{r plot-by-month}
+ggplot(fireinmonths) +
+  aes(x = month, y = count) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Number of fires occurred in each month", x = "Month", y = "Number fires") + 
+  theme(panel.background = element_rect(fill = "white"))
+```
+
+### Number of forest fires by a week-day
+```{r fires-per-weekday}
+fireindays <- ff %>%
+  group_by(day) %>%
+  summarize(count_weekday = n())
+```
+
+```{r plot-by-weekday}
+ggplot(fireindays) +
+  aes(x = day, y = count_weekday) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Number of fires occurred by each day", x = "Day of the week", y = "Number of fires") + 
+  theme(panel.background = element_rect(fill = "white"))
+```
+
+## Re-ordering months for easier readability
+```{r add-factor}
+ff <- ff %>%
+  mutate(month = factor(month, c("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"))) %>%
+  mutate(day = factor(day, c("mon", "tue", "wed", "thu", "fri", "sat", "sun")))
+
+```
+`factor` method helps us in showcasing variables as per out convenience. For example, here it is easy to read data in chronological order for months and even week days.
+
+## Plots after using factor
+
+### Number of forest fires by month:
+```{r fires-per-month}
+fireinmonths <- ff %>%
+  group_by(month) %>%
+  summarize(count = n())
+```
+
+```{r plot-again-by-month}
+ggplot(fireinmonths) +
+  aes(x = month, y = count) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Number of fires occurred in each month", x = "Month", y = "Number fires") + 
+  theme(panel.background = element_rect(fill = "white"))
+```
+
+### Number of forest fires in different weekdays:
+```{r fires-per-weekday-again}
+fireindays <- ff %>%
+  group_by(day) %>%
+  summarize(count_weekday = n())
+```
+
+
+```{r plot-again}
+ggplot(fireindays) +
+  aes(x = day, y = count_weekday) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Number of fires occurred by each day", x = "Day of the week", y = "Number of s fires") + 
+  theme(panel.background = element_rect(fill = "white"))
+
+```
+
+## What are the causes?
+ 
+ Let's explore the different variables whose data is available:
+ 
+ FFMC - Fine Fuel Moisture Code index  
+ DMC - Duff Moisture Code index  
+ DC - Drought code index  
+ ISI - Initial spread index  
+ temp - Temperature in degrees Celsius   
+ RH - Relative Humidity  
+ wind - Wind speed (km/h)  
+ rain - Outside Rain (mm/m2)
+ 
+For details about understanding what the variable indicated, visit [FWI Information site](http://cwfis.cfs.nrcan.gc.ca/background/summary/fwi).
+ 
+Let's plot some box plots to start with:
+
+### Box plots of independent var. by month
+```{r function-for-multiple-plots}
+create_box_by_month <- function(x, y) {
+  ggplot(ff) +
+    aes_string(x, y) + 
+    geom_boxplot()
+}
+
+x_var <- c("month")
+y_var <- c("FFMC", "DMC","DC", "ISI", "temp", "RH", "wind", "rain")
+  
+map2(x_var, y_var, create_box_by_month)
+```
+
+**Comment:**
+All the variables when plotted by month show some kind of relation with the month.
+The `temp` variable shows a pattern of being higher during the summer months. We can also see that the `DC` variable, which stands for "drought code" and is a measure of how dry conditions are, is high during the late summer months.
+
+### Box Plots of independent var. by week day
+```{r function-for-multiple-plots-by-day}
+create_box_by_day <- function(x, y) {
+  ggplot(ff) +
+    aes_string(x, y) + 
+    geom_boxplot()
+}
+
+X_var <- c("day")
+Y_var <- c("FFMC", "DMC","DC", "ISI", "temp", "RH", "wind", "rain")
+  
+map2(X_var, Y_var, create_box_by_day)
+
+```
+
+**Comment:**
+It's clear from looking at the solid black lines in the centers of the box plots that medians for each variable seem to be quite consistent across days of the week. The size of the boxes are also consistent across days, suggesting that the ranges of data values are similar.
+
+The number of outlier points and the length of the box whiskers representing high and low points vary from day to day. However, there do not seem to be any patterns that suggest that the variables differ by day of the week, despite the fact that the number of forest fires appears to be higher on weekends.
+
+*Though week day plots didn't reveal anything interesting, month-wise box plots got some information which looks quite relevant and the variables which revealed such differences might be capable of explaining why there are such differences in a further investigation.*
+
+### Which variables are related to forest fire severity?
+
+**How is forest fire severity measured?**  
+In our dataset, `area` is the variable which helps us measure the fire severity.
+```{r scatter-plot-function}
+create_scatter <- function(x,y){
+  ggplot(data = ff) +
+    aes_string(x,y) +
+    geom_point()
+}
+
+Y_scat <- c("area")
+X_scat <- c("FFMC", "DMC","DC", "ISI", "temp", "RH", "wind", "rain")
+
+map2(X_scat, Y_scat, create_scatter)
+```
+
+It seems most of the data points are in the lower part of all the area plots.
+
+**Let's plot a histogram quickly:**
+```{r quick-check-where-the-points-are-concentrated}
+ggplot(ff)+
+  aes(area) +
+  geom_histogram(bins = 20)
+```
+
+The above histogram tells that the burnt area concentration is below 500 ha per each entry in the dataset. It is also evident that most number of points are focused towards a lower area which is less than `50 ha`. As most of the area points are in the lower part of the plots, let’s filter out data and plot the same scatter plots for a fewer number of data points.
+
+**Area filters:**
+
+```{r area-filters-based-on-data-availability}
+area_is_zero <- ff %>%
+  filter(area == 0)
+area_without_outliers <- ff %>%
+  filter(area > 0 & area < 400)
+area_0_and_50 <- ff %>%
+  filter(area > 0 & area <= 50)
+
+```
+
+### Plotting area burnt between 0 ha and 50 ha
+```{r re-plotting-scatter-plot}
+create_scatter <- function(x,y){
+  ggplot(data = area_0_and_50) +
+    aes_string(x,y) +
+    geom_point()
+}
+
+Y_scat <- c("area")
+X_scat <- c("FFMC", "DMC","DC", "ISI", "temp", "RH", "wind", "rain")
+
+map2(X_scat, Y_scat, create_scatter)
+
+```
+
+**Comment:**
+With no clear patterns after plotting **without outliers** and **removing zero area values** separately, plotting for the area in the range [0,50] shows `FFMC` has a positive trend with `area`. The plot of rain and area shows that there was no rain when any amount of area occurred, which is a trivial insight. No other variables show any noticeable relation with area.
+
+This ends the data exploration and suggests to verify the insights derived from a statistical standpoint so that the happenings can be explained with reason and may be utilized to **predict the occurence of forest fires**.
+
+## References
+
+Thanks to [Dataquest](https://dataquest.io)! Follow me on [Github](http://github.com/akshayreddykotha).
